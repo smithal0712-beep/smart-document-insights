@@ -11,11 +11,11 @@
 ## 📸 Screenshots
 
 ### 📂 Document Upload & Processing
-![Upload Screenshot](screenshots/upload.png)
+![Upload Screenshot](Copy-Item C:\Users\smith\Desktop\upload.png screenshots\upload.png -Force)
 > *Drag-and-drop PDF upload with real-time chunking and embedding progress.*
 
 ### 💬 Ask Anything Interface
-![Chat Screenshot](screenshots/chat.png)
+![Chat Screenshot](Copy-Item C:\Users\smith\Desktop\chat.png screenshots\chat.png -Force)
 > *Natural language Q&A with highlighted source context from the original document.*
 
 ---
