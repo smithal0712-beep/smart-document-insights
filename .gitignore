@@ -1,0 +1,7 @@
+.env
+faiss_index.bin
+chunks.pkl
+__pycache__/
+uploaded.pdf
+*.pyc
+screenshots/
