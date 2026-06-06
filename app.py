@@ -1,6 +1,6 @@
 import streamlit as st
 import html
-from rag_engine import ingest_pdf, ask_question
+from rag_engine import ingest_pdf, ingest_multiple_pdfs, ask_question
 
 st.set_page_config(
     page_title="Smart Document Insights",
@@ -488,7 +488,6 @@ and generates clean answers instantly.
 </div>
 
 </div>
-</div>
 """, unsafe_allow_html=True)
 
 # -------------------- Main Layout --------------------
@@ -509,27 +508,32 @@ with left_col:
     </div>
     """, unsafe_allow_html=True)
 
-    uploaded_file = st.file_uploader(
-        "Choose a PDF file",
-        type=["pdf"],
-        label_visibility="collapsed"
-    )
+    uploaded_files = st.file_uploader(
+    "Choose PDF files",
+    type=["pdf"],
+    accept_multiple_files=True,
+    label_visibility="collapsed"
+)
 
-    if uploaded_file is not None:
-        st.session_state.file_name = uploaded_file.name
+    if uploaded_files:
+        st.session_state.file_name = ", ".join([file.name for file in uploaded_files])
 
-        with open("uploaded.pdf", "wb") as f:
-            f.write(uploaded_file.getbuffer())
+        for index, uploaded_file in enumerate(uploaded_files):
+            file_path = f"uploaded_{index}.pdf"
 
-        st.success(f"Selected: {uploaded_file.name}")
+            with open(file_path, "wb") as f:
+                f.write(uploaded_file.getbuffer())
 
-        if st.button("Process Document"):
+        st.success(f"Selected {len(uploaded_files)} PDF files")
+
+        if st.button("Process Documents"):
             with st.spinner("Building AI knowledge base..."):
-                result = ingest_pdf("uploaded.pdf")
+                result = ingest_multiple_pdfs(uploaded_files)
                 st.session_state.pdf_ready = True
                 st.success(result)
+
     else:
-        st.warning("Upload a PDF to unlock the chat.")
+        st.warning("Upload PDF files to unlock the chat.")
 
     st.markdown('</div>', unsafe_allow_html=True)
 
